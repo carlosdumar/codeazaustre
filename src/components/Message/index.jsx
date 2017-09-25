@@ -23,7 +23,11 @@ class Message extends Component {
                 <div className={styles.buttons}>
                     <div className={styles.icon}>
                         <span className="fa fa-reply"></span>
+                    </div>
+                    <div className={styles.icon}>
                         <span className="fa fa-retweet"></span>
+                    </div>
+                    <div className={styles.icon}>
                         <span className="fa fa-star"></span>
                     </div>
                 </div>
