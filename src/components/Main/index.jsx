@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import uuid from 'uuid'
 import MessageList from '../MessageList'
 import InputText from '../InputText'
 import ProfileBar from '../ProfileBar'  
@@ -9,6 +10,7 @@ class Main extends Component {
         this.state = {
             openText: false,
             messages: [{
+                id: uuid.v4(),
                 text: 'Mensaje del Tweet',
                 picture: 'https://i.annihil.us/u/prod/marvel/i/mg/6/a0/55b6a25e654e6/standard_xlarge.jpg',
                 displayName: 'Carlos Rodriguez',
@@ -16,23 +18,46 @@ class Main extends Component {
                 date: Date.now() - 180000
             },
             {
+                id: uuid.v4(),
                 text: 'Este es un nuevo mensaje',
                 picture: 'https://i.annihil.us/u/prod/marvel/i/mg/6/90/537ba6d49472b/standard_xlarge.jpg',
                 displayName: 'Carlos Rodriguez',
                 username: 'carlosrodriguez',
                 date: Date.now() - 1800000
-            }
-            ]
+            }]
         }
+        this.handleSendTex = this.handleSendText.bind(this);
+        this.handleCloseText = this.handleCloseText.bind(this);
+        this.handleOpenText = this.handleOpenText.bind(this);
+    }
+    handleSendText (event) {
+        event.preventDefault();
+        let newMessage = {
+            id: uuid.v4(),
+            username: this.props.user.email.split('@')[0],
+            displayName: this.props.user.displayName,
+            date: Date.now(),
+            text: event.target.text.value
+        }
+        console.log(newMessage);
+    }
+    handleCloseText (event) {
+        event.preventDefault();
+        this.setState({ openText: false })
     }
     handleOpenText(event) {
         event.preventDefault()
-        this.setState({ onOpenText: true })
+        this.setState({ openText: true })
     }
 
     renderOpenText() {
         if (this.state.openText) {
-            return <InputText />
+            return (
+                <InputText 
+                    onSendText={this.handleSendTex}
+                    onCloseText={this.handleCloseText}
+                />
+            )
         }
     }
     render() { 
