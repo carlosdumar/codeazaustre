@@ -13,6 +13,7 @@ class App extends Component {
             user: {
                 photoURL: 'https://i.annihil.us/u/prod/marvel/i/mg/6/a0/55b6a25e654e6/standard_xlarge.jpg',
                 email: 'carlosrodriguez@gmail.com',
+                displayName: 'Carlos Rodriguez',
                 onOpenText: false
             }
         }
