@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import 'normalize-css'
 
 import styles from './app.css'
@@ -18,12 +19,49 @@ class App extends Component {
             }
         }
     }
-    render () {
+    render() {
         return (
-            <div>
-                <Header />
-                <Main user={this.state.user} />
-            </div>
+            <Router>
+                <div>
+                    <Header />
+
+                    <Switch>
+                        <Route exact path='/' render={() => {
+                            if (this.state.user) {
+                                return (
+                                    <Main
+                                        user={this.state.user}
+                                        onLogout={this.handleLogout}
+                                    />
+                                )
+                            } else {
+                                return (
+                                    <Login onAuth={this.handleOnAuth} />
+                                )
+                            }
+                        }} />
+                        <Route path='/profile' render={() => {
+                            return (
+                                <Profile
+                                    picture={this.state.user.photoURL}
+                                    username={this.state.user.email.split('@')[0]}
+                                    displayName={this.state.user.displayName}
+                                    location={this.state.user.location}
+                                    emailAddress={this.state.user.email}
+                                />
+                            )
+                        }} />
+                        <Route path='/user/:username' render={({ params }) => {
+                            return (
+                                <Profile
+                                    displayName={params.username}
+                                    username={params.username}
+                                />
+                            )
+                        }} />
+                    </Switch>
+                </div>
+            </Router>
         )
     }
 }
