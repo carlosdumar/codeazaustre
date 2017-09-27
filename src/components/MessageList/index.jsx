@@ -6,9 +6,6 @@ import styles from './message-list.css'
 class MessageList extends Component {
     constructor (props) {
         super(props)
-
-        this.onRetweet = this.onRetweet.bind(this)
-        this.onFavorite = this.onFavorite.bind(this)
     }
 
     render() {
@@ -27,6 +24,7 @@ class MessageList extends Component {
                             numFavorites={msg.favorites}
                             onRetweet={() => this.props.onRetweet(msg.id)}
                             onFavorite={() => this.props.onFavorite(msg.id)}
+                            onReplyTweet={() => this.props.onReplyTweet(msg.id, msg.username)}
                         />
                     )
                 }).reverse()}
