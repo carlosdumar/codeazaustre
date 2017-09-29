@@ -5,6 +5,8 @@ import 'normalize-css'
 import styles from './app.css'
 import Header from '../Header'
 import Main from '../Main'
+import Profile from '../Profile'
+import Login from '../Login'
 
 class App extends Component {
     constructor() {
@@ -18,6 +20,8 @@ class App extends Component {
                 onOpenText: false
             }
         }
+
+        this.handleOnAuth = this.handleOnAuth.bind(this);
     }
     render() {
         return (
