@@ -1,23 +1,25 @@
-import Rect, { Component } from 'react'
+import React, { PropTypes } from 'react'
 import styles from './login.css'
 
-class Login extends Component {
-    render ()
-    {
-        return (
-            <div className={styles.root}>
-                <p className={styles.text}>
-                    Necesitamos que inicies sesion con tu cuenta de Github para que puedas leer y escribir mensjae.
-                </p>
-                <button
-                    onClick={this.props.onAuth}
-                    className={styles.button}
-                >
-                    Login on Github 
-                </button>
-            </div>
-        )
-    }
- }
+const propTypes = {
+    onAuth: PropTypes.func.isRequired
+}
 
- export class Login
+function Login({ onAuth }) {
+    return (
+        <div className={styles.root}>
+            <p className={styles.text}>
+                Necesitamos que inicies sesion con tu cuenta de Github para que puedas leer y escribir mensjae.
+            </p>
+            <button
+                onClick={onAuth}
+                className={styles.button}
+            >
+                <span className='fa fa-github'></span>Login on Github 
+            </button>
+        </div>
+    )
+}
+Login.propTypes = propTypes
+
+ export default Login

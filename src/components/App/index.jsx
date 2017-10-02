@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import firebase from 'firebase'
 import 'normalize-css'
 
 import styles from './app.css'
@@ -13,16 +14,37 @@ class App extends Component {
         super()
 
         this.state = {
-            user: {
-                photoURL: 'https://i.annihil.us/u/prod/marvel/i/mg/6/a0/55b6a25e654e6/standard_xlarge.jpg',
-                email: 'carlosrodriguez@gmail.com',
-                displayName: 'Carlos Rodriguez',
-                onOpenText: false
-            }
+            user: null
         }
 
         this.handleOnAuth = this.handleOnAuth.bind(this);
+        this.handleLogout = this.handleLogout.bind(this);
     }
+
+    componentWillMount() {
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                this.setState( { user })
+            } else {
+                this.setState({ user: null })
+            }
+        })
+    }
+
+    handleOnAuth () {
+        const provider = new firebase.auth.GithubAuthProvider()
+
+        firebase.auth().signInWithPopup(provider)
+            .then(result => console.log(`${result.user.email} ha iniciado sesion`))
+            .catch(error => console.error(`Error: ${error.code}: ${error.message}`))
+    }
+
+    handleLogout() {
+        firebase.auth().signOut()
+            .then(() => console.log('Te has desconectado correctamente'))
+            .catch(() => console.log('Un error ocurrio'))
+    }
+
     render() {
         return (
             <Router>

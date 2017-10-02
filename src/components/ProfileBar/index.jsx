@@ -1,24 +1,29 @@
-import React, { Component } from 'react'
+import React, { PropTypes } from 'react'
 import styles from './profile-bar.css'
 
-class ProfileBar extends Component {
-    constructor() {
-        super()
-    }
-
-    render() {
-        return(
-            <div className={styles.root}>
-                <figure>
-                    <img className={styles.avatar} src={this.props.picture} />
-                </figure>
-                <span className={styles.username}>Hola @{this.props.username}!</span>
-                <button onClick={this.props.onOpenText} className={styles.button}>
-                    <span className="fa fa-lg fa-edit"></span> Tweet
-                </button>
-            </div>
-        )
-    }
+const propTypes = {
+    picture: PropTypes.string.isRequired,
+    username: PropTypes.string.isRequired,
+    onOpenText: PropTypes.func.isRequired,
+    onLogout: PropTypes.func.isRequired
 }
+function ProfileBar( { picture, username, onOpenText, onLogout }) {
+    return (
+        <div className={styles.root}>
+            <figure>
+                <img className={styles.avatar} src={picture} />
+            </figure>
+            <span className={styles.username}>Hola @{username}!</span>
+            <button onClick={onOpenText} className={styles.button}>
+                <span className="fa fa-lg fa-edit"></span> Tweet
+            </button>
+            <button onClick={onLogout} className={styles.button}>
+                <span className='fa fa-sign-out'></span> Salir
+            </button>
+        </div>
+    )
+}
+
+ProfileBar.propTypes = propTypes
 
 export default ProfileBar
